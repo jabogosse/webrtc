@@ -85,6 +85,7 @@ function startWebRTC(isOfferer) {
             pc.createOffer(localDescCreated, error => console.error(error));
         }
         dataChannel = pc.createDataChannel('chat');
+
         setupDataChannel();
     } else {
         // If user is not the offerer let wait for a data channel
@@ -178,7 +179,7 @@ function setupDataChannel() {
     dataChannel.onopen = checkDataChannelState;
     dataChannel.onclose = checkDataChannelState;
     dataChannel.onmessage = event =>
-        insertMessageToDOM(JSON.parse(event.data), false)
+        insertMessageToDOM(JSON.parse(event.data), false);
 }
 
 function checkDataChannelState() {
@@ -189,8 +190,6 @@ function checkDataChannelState() {
 }
 
 function insertMessageToDOM(options, isFromMe) {
-    console.log("new msg");
-    playAudio();
     const template = document.querySelector('template[data-template="message"]');
     const nameEl = template.content.querySelector('.message__name');
     if (options.emoji || options.name) {
@@ -202,6 +201,7 @@ function insertMessageToDOM(options, isFromMe) {
     if (isFromMe) {
         messageEl.classList.add('message--mine');
     } else {
+        playAudio();
         messageEl.classList.add('message--theirs');
     }
 
