@@ -189,6 +189,8 @@ function checkDataChannelState() {
 }
 
 function insertMessageToDOM(options, isFromMe) {
+    console.log("new msg");
+    playAudio();
     const template = document.querySelector('template[data-template="message"]');
     const nameEl = template.content.querySelector('.message__name');
     if (options.emoji || options.name) {
@@ -226,5 +228,11 @@ form.addEventListener('submit', () => {
 
     insertMessageToDOM(data, true);
 });
+
+var x = document.getElementById("myAudio");
+
+function playAudio() {
+    x.play();
+}
 
 insertMessageToDOM({content: 'L\'url du chat est : ' + location.href});
